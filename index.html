@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    霸屏
+    <button id="leave">不玩了</button>
+    <button id="close">关闭</button>
+    <button id="KioskMode">KioskMode模式</button>
+    <button id="fullscreen">全屏切换</button>
+    <button id="all">多窗口</button>
+    <script>
+        var win = nw.Window.get();
+        win.enterFullscreen();
+        document.getElementById('fullscreen').onclick = function() {
+            win.toggleFullscreen();
+        }
+        document.getElementById('KioskMode').onclick = function() {
+            win.toggleKioskMode();
+        }
+        document.getElementById('close').onclick = function() {
+            win.close(true);
+        }
+        document.getElementById('leave').onclick = function() {
+            win.leaveFullscreen();
+        }
+        document.getElementById('all').onclick = function() {
+            win.setVisibleOnAllWorkspaces(true);
+        }
+        win.on('close', function(){
+            console.log('close');
+        })
+        win.on('blur', function(){
+            win.setAlwaysOnTop(true);
+            win.enterFullscreen();
+        })
+        var result = win.canSetVisibleOnAllWorkspaces();
+        console.log(result);
+    </script>
+</body>
+</html>
